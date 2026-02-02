@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String
+  createdAt DateTime @default(now())
+}
+
+model Asset {
+  id        Int      @id @default(autoincrement())
+  name      String
+  type      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  invoices  Invoice[]
+}
+
+
+model Invoice {
+  id        Int      @id @default(autoincrement())
+  assetId   Int
+  asset     Asset    @relation(fields: [assetId], references: [id])
+  amount    Float
+  dueDate   DateTime
+  status    String   @default("waiting")
+  createdAt DateTime @default(now())
+  payment   Payment?
+}
+
+
+model Payment {
+  id          Int      @id @default(autoincrement())
+  invoiceId   Int      @unique
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id])
+  proofPath   String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+}
