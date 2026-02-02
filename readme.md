@@ -100,7 +100,7 @@ asset-income-app/
 
 ⚙️ Installation & Setup
 1️⃣ Clone repository
-git clone https://github.com/USERNAME/asset-income-app.git
+git clone https://github.com/naufal0h/assets-app-v1.git
 cd asset-income-app
 
 2️⃣ Backend setup
